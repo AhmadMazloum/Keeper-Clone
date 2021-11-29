@@ -8,22 +8,28 @@ function App(){
     const [notesArray, setNotesArray] = useState([]);
 
     function handleClick(newNote){
-
         setNotesArray((prevItems) =>{
             return [...prevItems, newNote];
-        }
-        
-        )
+        } )
+    }
+    function deleteNote(id){
+        setNotesArray(prevItems => {
+            return prevItems.filter((noteItem, index)=> {
+                return index !== id
+            })
+        })
     }
     return (
         <div>
             <Header />
             <CreateNote handleClick = {handleClick}/>
-            {notesArray.map(noteItem =>(
+            {notesArray.map((noteItem, index) =>(
                 <Note
-                    key = {noteItem.id}
+                    key = {index}
+                    id = {index}
                     title = {noteItem.title}
                     content = {noteItem.content} 
+                    deleteNote = {deleteNote}
                 />
             ))}
             <Footer />
